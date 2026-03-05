@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Recomendador de Películas IA</title>
+		<link rel="stylesheet" href="/static/style.css">
+	</head>
+	<body>
+		<!-- Language Switch Button -->
+		<button id="langBtn" class="lang-btn">EN</button>
+		<div class="container">
+			<h1 id="mainTitle">Recomendador de Películas <span class="main-ia">IA</span></h1>
+			<div class="search-box">
+				<input
+					id="movieInput"
+					type="text"
+					placeholder="Buscar película..."
+					oninput="autoComplete()"
+				/>
+				<button id="searchBtn" onclick="searchMovie()">
+					Buscar
+				</button>
+			</div>
+			<div id="suggestions"></div>
+			<div id="loader" class="loader"></div>
+			<div id="results"></div>
+		</div>
+		<script src="/static/script.js"></script>
+		<script>
+		// Language data
+		const LANGUAGES = {
+			es: {
+				title: "Recomendador de Películas <span class=\"main-ia\">IA</span>",
+				placeholder: "Buscar película...",
+				search: "Buscar",
+				noSuggestions: "No hay sugerencias",
+				errorSuggestions: "Error al cargar sugerencias"
+			},
+			en: {
+				title: "Movie Recommender <span class=\"main-ia\">AI</span>",
+				placeholder: "Search movie...",
+				search: "Search",
+				noSuggestions: "No suggestions",
+				errorSuggestions: "Error loading suggestions"
+			}
+		};
+
+		let currentLang = "es";
+
+		function setLanguage(lang) {
+			currentLang = lang;
+			document.getElementById("mainTitle").innerHTML = LANGUAGES[lang].title;
+			document.getElementById("movieInput").placeholder = LANGUAGES[lang].placeholder;
+			document.getElementById("searchBtn").textContent = LANGUAGES[lang].search;
+			document.getElementById("langBtn").textContent = lang === "es" ? "EN" : "ES";
+		}
+
+		// Inicializar idioma
+		setLanguage(currentLang);
+
+		// Cambiar idioma al hacer clic en el botón
+		const langBtn = document.getElementById("langBtn");
+		langBtn.onclick = function() {
+			setLanguage(currentLang === "es" ? "en" : "es");
+		};
+
+		// Exponer idioma para script.js
+		window.getCurrentLang = () => currentLang;
+		window.getLangData = () => LANGUAGES[currentLang];
+		</script>
+	</body>
+</html>
